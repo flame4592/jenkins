@@ -1,0 +1,22 @@
+#Run your pipeline on a Kubernetes cluster with containers managed by Kubernetes pods
+
+pipeline {
+    agent {
+        kubernetes {
+            label 'my-k8s-label'
+            defaultContainer 'your-docker-image'
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            metadata:
+              labels:
+                some-label: some-value
+            spec:
+              containers:
+                - name: your-container
+                  image: your-docker-image
+            '''
+        }
+    }
+    // ...
+}

@@ -1,0 +1,8 @@
+#Use Jenkins agents (slaves) with specific labels, allowing you to distribute work to agents with matching labels
+
+pipeline {
+    agent {
+        label 'linux'
+    }
+    // ...
+}
