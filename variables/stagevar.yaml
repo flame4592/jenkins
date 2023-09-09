@@ -1,0 +1,19 @@
+# variables within a specific stage, and they will only be accessible within that stage.
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Example') {
+            environment {
+                stageVariable = 'This is a stage variable'
+            }
+            steps {
+                script {
+                    // Access the stage variable
+                    echo "Stage variable value: ${stageVariable}"
+                }
+            }
+        }
+    }
+}

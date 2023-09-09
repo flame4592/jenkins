@@ -1,0 +1,18 @@
+# variables within a script block, and they are scoped to that block.
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    def scriptVariable = 'This is a script variable'
+                    
+                    // Access the script variable
+                    echo "Script variable value: ${scriptVariable}"
+                }
+            }
+        }
+    }
+}

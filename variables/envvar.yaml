@@ -1,0 +1,20 @@
+# Global and environment variables can be accessed from anywhere in the pipeline
+
+pipeline {
+    agent any
+
+    environment {
+        ENV_VARIABLE = 'This is an environment variable'
+    }
+
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    // Access the environment variable
+                    echo "Environment variable value: ${ENV_VARIABLE}"
+                }
+            }
+        }
+    }
+}

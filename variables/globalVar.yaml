@@ -1,0 +1,18 @@
+# Global variables are defined at the top level of your Jenkinsfile and are accessible throughout the entire pipeline.
+
+def globalVariable = 'This is a global variable'
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Example') {
+            steps {
+                script {
+                    // Access the global variable
+                    echo "Global variable value: ${globalVariable}"
+                }
+            }
+        }
+    }
+}
