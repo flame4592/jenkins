@@ -1,0 +1,34 @@
+# sonarScannerHome is a variable that holds the path to the SonarScanner executable. It should define a tool installation named 'SonarScanner' in the Jenkins configuration to specify its location
+# Before you can use SonarScanner in your Jenkins pipeline, you need to ensure that it's installed on the Jenkins agent where your pipeline will run. You can download and install SonarScanner from the official SonarSource website.
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Check out your source code from the version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Build and SonarQube Scan') {
+            steps {
+                script {
+                    // Define the SonarScanner executable path
+                    def sonarScannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    
+                    // Run the SonarScanner analysis
+                    sh "${sonarScannerHome}/bin/sonar-scanner -Dsonar.projectKey=your-project-key -Dsonar.sources=src"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive build artifacts or perform additional actions
+        }
+    }
+}

@@ -1,0 +1,38 @@
+# Ensure that Trivy is installed on your Jenkins agent where the pipeline will run. You can download Trivy from the official GitHub releases page: https://github.com/aquasecurity/trivy/releases
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Check out your source code from the version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Build and Trivy Scan') {
+            steps {
+                script {
+                    // Define the Trivy executable path
+                    def trivyPath = '/path/to/trivy'
+
+                    // Define the Docker image or filesystem directory to scan
+                    def target = 'your-docker-image:latest'  // Replace with your target image or directory
+
+                    // Run the Trivy scan
+                    sh "${trivyPath} image --format json --output trivy-report.json ${target}"
+
+                    // Archive the Trivy report as a build artifact
+                    archiveArtifacts artifacts: 'trivy-report.json', allowEmptyArchive: true
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive other build artifacts or perform additional actions
+        }
+    }
+}

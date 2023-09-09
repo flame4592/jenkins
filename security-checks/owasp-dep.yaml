@@ -1,0 +1,36 @@
+# ensure that the Dependency-Check Plugin is installed in your Jenkins instance. You can install it from the Jenkins Plugin Manager if it's not already installed
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Check out your source code from the version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Run Dependency-Check') {
+            steps {
+                script {
+                    // Define the path to the Dependency-Check CLI executable
+                    def dependencyCheckPath = '/path/to/dependency-check-cli/bin/dependency-check.sh'
+
+                    // Run Dependency-Check against your project
+                    sh "${dependencyCheckPath} --scan . --project your-project-name --out dependency-check-report"
+
+                    // Archive the Dependency-Check report for Jenkins to display
+                    archiveArtifacts 'dependency-check-report'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive other build artifacts or perform additional actions
+        }
+    }
+}
