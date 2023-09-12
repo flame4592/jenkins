@@ -1,0 +1,18 @@
+# Script to allocate agents dynamically based on your project's requirements
+# Suitable when you need fine-grained control over agent selection or if agents need to be provisioned on-demand.
+
+
+pipeline {
+    agent none
+    stages {
+        stage('Allocate Agent') {
+            agent {
+                // Custom logic to allocate an agent dynamically
+            }
+            steps {
+                // Your pipeline steps
+            }
+        }
+    }
+    // ...
+}

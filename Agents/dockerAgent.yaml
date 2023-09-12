@@ -1,0 +1,11 @@
+## Useful for projects with specific dependencies or when you want to ensure reproducibility
+
+pipeline {
+    agent {
+        docker {
+            image 'your-docker-image'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    // ...
+}
