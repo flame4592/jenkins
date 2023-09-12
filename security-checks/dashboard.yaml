@@ -1,0 +1,11 @@
+post {
+    always {
+        // Archive multiple reports as build artifacts
+        archiveArtifacts artifacts: [
+            'trivy-report.json',
+            'static-analysis-report.xml',
+            'performance-report.jtl',
+            // Add more report file paths as needed
+        ], allowEmptyArchive: true
+    }
+}

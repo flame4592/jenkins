@@ -1,0 +1,18 @@
+stage('Run ZAP Scan') {
+    steps {
+        script {
+            // Define the path to the ZAP executable
+            def zapPath = '/path/to/zap.sh'  // Adjust this to your ZAP installation
+
+            // Define the target URL for the scan
+            def targetURL = 'https://example.com'  // Replace with your target URL
+
+            // Run the ZAP scan
+            sh "${zapPath} -quickurl ${targetURL}"
+                }
+            }
+        }
+    }
+
+# Ensure that OWASP ZAP is installed and accessible on the Jenkins build agent where your pipeline will run.
+# You can download ZAP from the OWASP ZAP website (https://www.zaproxy.org/download/) and follow the installation instructions for your platform.

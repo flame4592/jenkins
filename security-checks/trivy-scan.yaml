@@ -36,3 +36,5 @@ pipeline {
         }
     }
 }
+
+#  trivyPath is a variable that holds the path to the Trivy executable. You should adjust it to the location where Trivy is installed on your Jenkins agent.
