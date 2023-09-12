@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from version control (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Deploy to EC2') {
+            environment {
+                // Define your EC2 SSH credentials
+                SSH_KEY = credentials('YourSSHKeyCredentialID')
+                EC2_IP = 'your-ec2-instance-ip'
+            }
+            steps {
+                // Start an SSH agent and add your SSH key
+                sshagent(['YourSSHKeyCredentialID']) {
+                    // SSH into the EC2 instance and execute deployment commands
+                    sh '''
+                        ssh -i $SSH_KEY ec2-user@$EC2_IP "cd /path/to/your/app && git pull && ./deploy.sh"
+                    '''
+                }
+            }
+        }
+    }
+}
