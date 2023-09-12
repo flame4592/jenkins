@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define your Docker registry credentials
+        DOCKER_REGISTRY_CREDENTIALS = credentials('your-docker-registry-credentials-id')
+        DOCKER_IMAGE_NAME = 'your-docker-image-name'
+        DOCKER_IMAGE_TAG = 'latest'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
+
+                    // Push the Docker image to the registry
+                    docker.withRegistry('https://your-docker-registry-url', DOCKER_REGISTRY_CREDENTIALS) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            // Cleanup or perform additional actions on success
+        }
+    }
+}
